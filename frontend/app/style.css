@@ -1,0 +1,80 @@
+.not-bold{
+    font-weight: normal;
+}
+
+.small-margin{
+    margin: 4px;
+    width: 100%;
+}
+
+.too-big{
+    width: 80%;
+}
+
+.inova-navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.inova-navbar-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 20px;
+}
+
+.inova-navbar-options{
+}
+
+.inova-navbar-user{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.inova-card-container{
+    margin: 8px;
+    width: 99%;
+    position: relative;
+    margin-left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+}
+
+.card-body{
+    background-color: #eee;
+}
+
+.inova-card{
+    margin: 1%;
+    width: 31% !important;
+    display: inline-block;
+}
+
+.inova-card .card-body{
+    background-color: white;
+}
+
+.loading{
+    background-color: rgba(120, 120, 120, 0.8);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+.loading-loading{
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-loading img{
+    border-radius: 50%;
+}

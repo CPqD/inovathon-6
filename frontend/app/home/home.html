@@ -1,0 +1,106 @@
+<div>
+
+    <div class="loading" ng-if="mData.loading">
+        <div class="loading-loading">
+            <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"/>
+        </div>
+    </div>
+
+    <nav class="inova-navbar">
+        <a class="inova-navbar-user">{{user.name}}</a>
+
+        <div class="inova-navbar-name">
+            CarChain
+        </div>
+
+        <div class="inova-navbar-options" id="navbarSupportedContent">
+            <button class="btn my-2 my-sm-0" ng-click="logout()">Sair</button>
+        </div>
+    </nav>
+
+    <div ng-if="!user.worker">
+
+        <div class="card inova-card-container">
+            <h5 class="card-header">Seus Produtos</h5>
+            <div class="card-body">
+                <div class="card inova-card" style="width: 18rem;" ng-repeat="product in mData.products">
+                    <img ng-if="product.parentPartId == 'none' && product.image != ''" src="{{product.parentPartId != 'none' ? 'http://cdn.onlinewebfonts.com/svg/img_510390.png' : product.image}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}} - {{product.color}}</h5>
+                        <p class="card-text">{{formatDescription(product.description)}}</p>
+                        <button class="btn btn-primary" ng-if="!product.willTransfer" ng-click="product.willTransfer = true">Transferir</button>
+                        <button class="btn btn-info" ng-if="!product.willTransfer" ng-click="viewDetails(product)">Ver Detalhes</button>
+                        <div class="dropdown" ng-if="product.parentPartId != 'none' || product.image == ''">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Acoplar
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" ng-repeat="mProduct in mData.products" ng-if="mProduct.parentPartId == 'none'" ng-click="transferPart(product, mProduct)">{{mProduct.name}}</a>
+                            </div>
+                        </div>
+                        <div ng-if="product.willTransfer">
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" aria-label="" ng-model="product.to">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light input-group-text" ng-if="product.willTransfer" ng-click="product.willTransfer = false">Cancelar</button>
+                                    <button class="btn btn-primary input-group-text" ng-if="product.willTransfer" ng-click="transferProduct(product)">Transferir</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card inova-card-container">
+            <h5 class="card-header">Transferências Pendentes</h5>
+            <div class="card">
+                <div class="card-body" ng-repeat="invite in mData.sentInvites">
+                    <h5 class="card-title">{{invite.product.name}} <span class="not-bold">De</span> {{invite.from.name}} <span class="not-bold">para</span> {{invite.to.name}}</h5>
+                    <p class="card-text">{{product.createdDate | date: 'dd/MM/yyyy'}}</p>
+                    <button class="btn btn-danger" ng-click="removeInvite(invite)">Cancelar Transferência</button>
+                </div>
+                <div class="card-body" ng-repeat="invite in mData.receivedInvites">
+                    <h5 class="card-title">{{invite.product.name}} <span class="not-bold">De</span> {{invite.from.name}} <span class="not-bold">para</span> {{invite.to.name}}</h5>
+                    <p class="card-text">{{product.createdDate | date: 'dd/MM/yyyy'}}</p>
+                    <button class="btn btn-success" ng-click="acceptInvite(invite)">Aceitar Transferência</button>
+                    <button class="btn btn-danger" ng-click="removeInvite(invite)">Recusar Transferência</button>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="user.worker" class="small-margin">
+            <div class="input-group small-margin too-big">
+                <div class="input-group-prepend">
+                    <div class="dropdown input-group-text">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{mData.selectedProduct ? mData.selectedProduct.name : "Selecione um produto"}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" ng-repeat="product in mData.allProducts" ng-click="mData.selectedProduct = product">{{product.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="form-control" aria-label="" ng-model="update.content"></textarea>
+                <div class="input-group-append">
+                    <button class="btn btn-primary input-group-text" ng-click="sendUpdate(update, mData.selectedProduct)">Enviar Atualização</button>
+                </div>
+            </div>
+        </div>
+        <div class="card" ng-if="false">
+            <h5 class="card-header">Atualizações Pendentes</h5>
+            <div class="card-body" ng-repeat="update in mData.sentUpdates">
+                <h5 class="card-title">{{update.product.name}}</h5>
+                <p class="card-text">{{update.content}}</p>
+                <button class="btn btn-danger" ng-click="removeUpdate(update)">Cancelar Atualização</button>
+            </div>
+            <div class="card-body" ng-repeat="update in mData.receivedUpdates">
+                <h5 class="card-title">{{update.product.name}}</h5>
+                <p class="card-text">{{update.content}}</p>
+                <button class="btn btn-success" ng-click="acceptUpdate(update)">Aceitar Atualização</button>
+                <button class="btn btn-danger" ng-click="removeUpdate(update)">Recusar Atualização</button>
+            </div>
+        </div>
+    </div>

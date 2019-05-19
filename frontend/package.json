@@ -1,0 +1,16 @@
+{
+	"name": "inovapp",
+	"version": "1.0.0",
+	"description": "inovaapp",
+	"main": "server.js",
+	"author": "alan",
+	"license": "ISC",
+	"dependencies": {
+		"angular": "^1.6.1",
+		"angular-cookies": "^1.7.8",
+		"angular-ui-router": "^0.4.2",
+		"ejs": "^2.5.5",
+		"express": "^4.14.1",
+		"nodemon": "^1.19.0"
+	}
+}
